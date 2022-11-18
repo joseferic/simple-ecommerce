@@ -78,7 +78,7 @@ function buyButtonClicked() {
         cartContent.removeChild(cartContent.firstChild);
         console.log("test while loop");
     }
-    console.log("Tes buy button");
+    console.log("Tes buy-button");
     updateTotal();
 }
 //Add product to card function
