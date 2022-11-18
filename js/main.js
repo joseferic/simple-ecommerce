@@ -43,6 +43,8 @@ function ready() {
         button.addEventListener("click", addCartClicked);
     }
 
+    //Buy Button work
+    document.getElementsByClassName("btn-buy")[0].addEventListener('click', buyButtonClicked);
 }
 
 // Remove Item From The Cart
@@ -51,7 +53,6 @@ function removeCartItem(event) {
     buttonClicked.parentElement.remove();
     updateTotal();
 }
-
 // Quantity Change
 function quantityChanged(event) {
     var input = event.target;
@@ -70,7 +71,16 @@ function addCartClicked(event) {
     addProductToCard(title, price, productImg);
     updateTotal();
 }
-
+//Buy button
+function buyButtonClicked() {
+    var cartContent = document.getElementsByClassName("cart-content")[0];
+    while (cartContent.hasChildNodes()) {
+        cartContent.removeChild(cartContent.firstChild);
+        console.log("test while loop");
+    }
+    console.log("Tes buy button");
+    updateTotal();
+}
 //Add product to card function
 function addProductToCard(title, price, productImg) {
     var cartShopBox = document.createElement('div');
@@ -98,7 +108,7 @@ function addProductToCard(title, price, productImg) {
     console.log(cartItems);
     cartShopBox.getElementsByClassName("cart-remove")[0].addEventListener("click", removeCartItem);
     cartShopBox.getElementsByClassName("cart-quantity")[0].addEventListener("change", quantityChanged);
-    
+
 }
 
 
@@ -110,21 +120,16 @@ function updateTotal() {
     var cartBoxes = cartContent.getElementsByClassName("card-box");
     console.log(cartBoxes);
     var total = 0;
-    if(cartBoxes.length == 0){
-        document.getElementsByClassName("total-price")[0].innerText = "$" + total;
-        return;
-    }
-    
     for (var i = 0; i < cartBoxes.length; i++) {
         var cartBox = cartBoxes[i];
         //console.log(cartBox);
         var priceElement = cartBox.getElementsByClassName("cart-price")[0];
         //console.log(priceElement);
         var quantityElement = cartBox.getElementsByClassName("cart-quantity")[0];
-        var price = parseFloat(priceElement.innerText.replace("$",""));
+        var price = parseFloat(priceElement.innerText.replace("$", ""));
         var quantity = quantityElement.value;
         total = total + price * quantity;
-        total = Math.round(total * 100) / 100;
-        document.getElementsByClassName("total-price")[0].innerText = "$" + total;
     }
+    total = Math.round(total * 100) / 100;
+    document.getElementsByClassName("total-price")[0].innerText = "$" + total;
 }
